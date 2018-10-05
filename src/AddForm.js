@@ -21,6 +21,14 @@ class AddForm extends React.Component {
     this.props.onSubmit(this.state);
   }
 
+  componentDidUpdate() {
+    if (this.state.parent) {
+      if (!this.props.parents.find(item => item.id == this.state.parent ? item : undefined)) {
+        this.setState({parent: ''});
+      }
+    }
+  }
+
   render() {
     const parents = this.props.parents.map(item => (
       <option key={item.id} value={item.id}>{item.title}</option>
