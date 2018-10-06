@@ -1,8 +1,20 @@
 import React from 'react';
+import Modal from 'react-modal';
 import AddForm from './AddForm';
 import TodoList from './TodoList';
 
 const MAX_LEVEL = process.env.MAX_LEVEL || 1; // с 0
+
+const modalStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  }
+};
 
 class App extends React.Component {
   constructor(props) {
@@ -11,6 +23,8 @@ class App extends React.Component {
     this.handleAdd = this.handleAdd.bind(this);
     this.handleComplete = this.handleComplete.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
 
     this.state = {
       items: [
@@ -40,7 +54,16 @@ class App extends React.Component {
           ],
         },
       ],
+      modalIsOpen: false,
     };
+  }
+
+  openModal() {
+    this.setState({modalIsOpen: true});
+  }
+
+  closeModal() {
+    this.setState({modalIsOpen: false});
   }
 
   handleAdd(form) {
@@ -157,7 +180,16 @@ class App extends React.Component {
             onComplete={this.handleComplete}
             onRemove={this.handleRemove}
           />
-          <AddForm parents={parentItems} onSubmit={this.handleAdd}/>
+
+          <button className="btn btn-info" onClick={this.openModal}>Добавить элемент</button>
+          <Modal
+            isOpen={this.state.modalIsOpen}
+            onRequestClose={this.closeModal}
+            style={modalStyles}
+          >
+            <h3>Добавить элемент</h3>
+            <AddForm parents={parentItems} onSubmit={this.handleAdd}/>
+          </Modal>
         </main>
       </div>
     );

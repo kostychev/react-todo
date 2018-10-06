@@ -8,8 +8,10 @@ function TodoItem(props) {
 
   return (
     <li>
-      <label className={classNames({'TodoItem-completed': item.completed})}>
-        <input type="checkbox" checked={item.completed || false} onChange={() => props.onComplete(item.id)}/>
+      <label className={classNames({'TodoItem-completed': item.completed, 'form-check form-check-inline': true})}>
+        <input type="checkbox" className="form-check-input" checked={item.completed || false} 
+          onChange={() => props.onComplete(item.id)}
+        />
         {item.title}
       </label>
 

@@ -1,0 +1,23 @@
+/* body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  line-height: 1.5;
+} */
+
+/* body {
+  min-width: 360px;
+  width: 50%;
+  margin: 0 auto;
+} */
+
+main > ul {
+  padding-left: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ul > li {
+  margin: 0.3rem 0;
+} */
