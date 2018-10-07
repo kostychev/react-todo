@@ -90,6 +90,8 @@ class App extends React.Component {
     }
 
     this.setState({items: newItems});
+
+    this.closeModal();
   }
 
   handleComplete(id) {
