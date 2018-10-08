@@ -2,11 +2,13 @@ import React from 'react';
 import Modal from 'react-modal';
 import AddForm from './AddForm';
 import TodoList from './TodoList';
+import items from './fixtures';
 
 const MAX_LEVEL = process.env.MAX_LEVEL || 1; // с 0
 
 const modalStyles = {
   content: {
+    minWidth: '480px',
     top: '50%',
     left: '50%',
     right: 'auto',
@@ -19,56 +21,20 @@ const modalStyles = {
 Modal.setAppElement('#root');
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    items: items,
+    modalIsOpen: false,
+  };
 
-    this.handleAdd = this.handleAdd.bind(this);
-    this.handleComplete = this.handleComplete.bind(this);
-    this.handleRemove = this.handleRemove.bind(this);
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-
-    this.state = {
-      items: [
-        {
-          id: 1,
-          title: 'Элемент списка 1',
-          completed: false,
-          sublist: null,
-        },
-        {
-          id: 2,
-          title: 'Элемент списка 2',
-          completed: false,
-          sublist: [
-            {
-              id: 3,
-              title: 'Элемент списка 2.1',
-              completed: false,
-              sublist: [
-                {
-                  id: 4,
-                  title: 'Элемент списка 2.1.1',
-                  completed: false,
-                  sublist: [],
-                }],
-            },
-          ],
-        },
-      ],
-      modalIsOpen: false,
-    };
-  }
-
-  openModal() {
+  openModal = () => {
     this.setState({modalIsOpen: true});
-  }
+  };
 
-  closeModal() {
+  closeModal = () => {
     this.setState({modalIsOpen: false});
-  }
+  };
 
-  handleAdd(form) {
+  handleAdd = (form) => {
     let newItems = this.state.items.slice();
 
     const newItem = {
@@ -94,9 +60,9 @@ class App extends React.Component {
     this.setState({items: newItems});
 
     this.closeModal();
-  }
+  };
 
-  handleComplete(id) {
+  handleComplete = (id) => {
     let items = this.state.items.slice();
     const item = this.findItem(id, items);
 
@@ -104,9 +70,9 @@ class App extends React.Component {
       item.completed = !item.completed;
       this.setState({items: items})
     }
-  }
+  };
 
-  handleRemove(id) {
+  handleRemove = (id) => {
     let items = this.state.items.slice();
     const item = this.findItem(id, items);
 
@@ -114,7 +80,7 @@ class App extends React.Component {
       this.removeItem(id, items);
       this.setState({items: items});
     }
-  }
+  };
 
   findItem(id, items) {
     id = parseFloat(id);

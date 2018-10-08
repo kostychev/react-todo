@@ -1,25 +1,18 @@
 import React from 'react';
 
 class AddForm extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {parent: '', title: ''};
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-
-    this.state = {parent: '', title: ''};
-  }
-
-  handleChange(e) {
+  handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
     });
-  }
+  };
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.props.onSubmit(this.state);
-  }
+  };
 
   componentDidUpdate() {
     if (this.state.parent) {

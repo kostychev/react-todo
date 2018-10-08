@@ -9,7 +9,10 @@ function TodoItem(props) {
   return (
     <li>
       <label className={classNames({'TodoItem-completed': item.completed, 'form-check form-check-inline': true})}>
-        <input type="checkbox" className="form-check-input" checked={item.completed || false} 
+        <input
+          type="checkbox"
+          className="form-check-input"
+          checked={item.completed || false}
           onChange={() => props.onComplete(item.id)}
         />
         {item.title}
@@ -17,7 +20,10 @@ function TodoItem(props) {
 
       {item.completed && <a
         href="#remove"
-        onClick={e => { e.preventDefault(); props.onRemove(item.id); }}
+        onClick={e => {
+          e.preventDefault();
+          props.onRemove(item.id);
+        }}
         className="TodoItem-remove"
       >Удалить</a>}
 
