@@ -16,8 +16,8 @@ function TodoItem(props) {
       </label>
 
       {item.completed && <a
-        href="javascript:void(0)"
-        onClick={() => props.onRemove(item.id)}
+        href="#remove"
+        onClick={e => { e.preventDefault(); props.onRemove(item.id); }}
         className="TodoItem-remove"
       >Удалить</a>}
 

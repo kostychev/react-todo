@@ -16,6 +16,8 @@ const modalStyles = {
   }
 };
 
+Modal.setAppElement('#root');
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -115,10 +117,11 @@ class App extends React.Component {
   }
 
   findItem(id, items) {
+    id = parseFloat(id);
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
 
-      if (id == item.id) {
+      if (id === item.id) {
         return item;
       }
 
@@ -134,10 +137,11 @@ class App extends React.Component {
   }
 
   removeItem(id, items) {
+    id = parseFloat(id);
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
 
-      if (id == item.id) {
+      if (id === item.id) {
         items.splice(i, 1);
         return items;
       }
