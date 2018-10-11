@@ -8,7 +8,7 @@ function TodoList(props) {
     return false;
   }
 
-  items.sort((a, b) => {
+  items = items.slice().sort((a, b) => {
     if (a.completed && b.completed) return a.id < b.id ? -1 : 1;
     if (a.completed) return 1;
     if (b.completed) return -1;

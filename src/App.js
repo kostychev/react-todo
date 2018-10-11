@@ -142,7 +142,7 @@ class App extends React.Component {
     parentItems.unshift({id: 0, title: 'Select'});
 
     return (
-      <div>
+      <>
         <header>
           <h1>Todo list</h1>
         </header>
@@ -163,7 +163,7 @@ class App extends React.Component {
             <AddForm parents={parentItems} onSubmit={this.handleAdd}/>
           </Modal>
         </main>
-      </div>
+      </>
     );
   }
 }
