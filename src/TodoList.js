@@ -1,9 +1,7 @@
 import React from 'react';
 import TodoItem from './TodoItem';
 
-function TodoList(props) {
-  let {items} = props;
-
+function TodoList({ items }) {
   if (!items) {
     return false;
   }
@@ -20,8 +18,6 @@ function TodoList(props) {
       {items.map(item => <TodoItem
         key={item.id}
         item={item}
-        onComplete={(id) => props.onComplete(id)}
-        onRemove={(id) => props.onRemove(id)}
       />)}
     </ul>
   );

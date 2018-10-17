@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { addTodo } from './redux/actions';
 
 class AddForm extends React.Component {
-  state = {parent: '', title: ''};
+  state = { parent: '', title: '' };
 
   handleChange = (e) => {
     this.setState({
@@ -11,16 +13,18 @@ class AddForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.onSubmit(this.state);
+    this.props.addTodo(this.state);
+    this.setState({ parent: '', title: '' });
+    this.props.onSubmit();
   };
 
-  componentDidUpdate() {
-    if (this.state.parent) {
-      if (!this.props.parents.find(item => item.id.toString() === this.state.parent ? item : undefined)) {
-        this.setState({parent: ''});
-      }
-    }
-  }
+  // componentDidUpdate() {
+  //   if (this.state.parent) {
+  //     if (!this.props.parents.find(item => item.id.toString() === this.state.parent ? item : undefined)) {
+  //       this.setState({ parent: '' });
+  //     }
+  //   }
+  // }
 
   render() {
     const parents = this.props.parents.map(item => (
@@ -55,4 +59,7 @@ class AddForm extends React.Component {
   }
 }
 
-export default AddForm;
+export default connect(
+  null,
+  { addTodo },
+)(AddForm);
