@@ -9,41 +9,25 @@ const initState = {
 export default function (state = initState, action) {
   switch (action.type) {
     case ADD_TODO: {
-      let newItems = JSON.parse(JSON.stringify(state.items));
-      const { id, parent, title } = action.payload;
       const newItem = {
-        id,
-        title,
+        ...action.payload,
         completed: false,
       };
 
-      if (!parent) {
-        newItems.push(newItem);
-      } else {
-        let foundItem = findItemById(newItems, parent);
-
-        if (foundItem) {
-          if (!foundItem.sublist) {
-            foundItem.sublist = [];
-          }
-
-          foundItem.sublist.push(newItem);
-        }
-      }
-
       return {
         ...state,
-        items: newItems,
+        items: [...state.items, newItem],
       };
     }
 
     case TOGGLE_TODO: {
-      let newItems = JSON.parse(JSON.stringify(state.items));
+      let newItems = state.items.slice();
       const { id } = action.payload;
 
-      const item = findItemById(newItems, id);
-      if (item) {
-        item.completed = !item.completed;
+      const idx = newItems.findIndex(item => item.id === id);
+      if (idx !== -1) {
+        const item = newItems[idx];
+        newItems[idx] = { ...item, completed: !item.completed };
       }
 
       return {
@@ -53,13 +37,10 @@ export default function (state = initState, action) {
     }
 
     case REMOVE_TODO: {
-      let newItems = JSON.parse(JSON.stringify(state.items));
+      let newItems = state.items.slice();
       const { id } = action.payload;
 
-      const item = findItemById(newItems, id);
-      if (item && item.completed && window.confirm('Вы уверены, что хотите удалить элемент?')) {
-        removeItemById(newItems, id);
-      }
+      removeItemById(newItems, id)
 
       return {
         ...state,

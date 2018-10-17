@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import AddForm from './AddForm';
 import TodoList from './TodoList';
 import { connect } from 'react-redux';
+import { buildParents } from './helpers';
 
 const MAX_LEVEL = 1; // с 0
 
@@ -33,25 +34,8 @@ class App extends React.Component {
     this.setState({ modalIsOpen: false });
   };
 
-  buildParents(items, level = 0) {
-    let parents = [];
-
-    items.forEach(item => {
-      parents.push({
-        id: item.id,
-        title: '-'.repeat(level) + (level > 0 ? ' ' : '') + item.title,
-      });
-
-      if (level < MAX_LEVEL && item.sublist) {
-        parents.push(...this.buildParents(item.sublist, level + 1));
-      }
-    });
-
-    return parents;
-  }
-
   render() {
-    const parentItems = this.buildParents(this.props.items);
+    const parentItems = buildParents(this.props.items);
     parentItems.unshift({ id: 0, title: 'Select' });
 
     return (
@@ -60,7 +44,7 @@ class App extends React.Component {
           <h1>Todo list</h1>
         </header>
         <main>
-          <TodoList items={this.props.items}/>
+          <TodoList />
 
           <button className="btn btn-info" onClick={this.openModal}>Добавить элемент</button>
           <Modal

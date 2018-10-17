@@ -4,7 +4,7 @@ export const addTodo = ({ parent, title }) => ({
   type: ADD_TODO,
   payload: {
     id: new Date().getTime(),
-    parent,
+    parent: parent ? parseFloat(parent) : null,
     title,
   },
 });

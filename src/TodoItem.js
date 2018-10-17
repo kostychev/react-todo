@@ -5,7 +5,7 @@ import './TodoItem.css';
 import { connect } from 'react-redux';
 import { toggleTodo, removeTodo } from './redux/actions';
 
-function TodoItem({ item: { id, title, completed, sublist }, toggleTodo, removeTodo }) {
+function TodoItem({ item: { id, title, completed }, toggleTodo, removeTodo }) {
   return (
     <li>
       <label className={classNames({ 'TodoItem-completed': completed, 'form-check form-check-inline': true })}>
@@ -22,12 +22,14 @@ function TodoItem({ item: { id, title, completed, sublist }, toggleTodo, removeT
         href="#remove"
         onClick={e => {
           e.preventDefault();
-          removeTodo(id);
+          if (completed && window.confirm('Вы уверены, что хотите удалить элемент?')) {
+            removeTodo(id);
+          }
         }}
         className="TodoItem-remove"
       >Удалить</a>}
 
-      <TodoList items={sublist}/>
+      <TodoList parent={id} />
     </li>
   );
 }

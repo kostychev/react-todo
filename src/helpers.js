@@ -1,37 +1,24 @@
-export const findItemById = (items, id) => {
-  id = parseFloat(id);
-  for (let i = 0; i < items.length; i++) {
-    const item = items[i];
-
-    if (id === item.id) {
-      return item;
-    }
-
-    if (Array.isArray(item.sublist)) {
-      const result = findItemById(item.sublist, id);
-      if (result !== null) {
-        return result;
-      }
-    }
+export const removeItemById = (items, id) => {
+  const idx = items.findIndex(item => item.id === id);
+  if (idx !== -1) {
+    items.splice(idx, 1);
+    items.filter(item => item.parent === id).forEach(item => removeItemById(items, item.id));
   }
-
-  return null;
 };
 
-export const removeItemById = (items, id) => {
-  id = parseFloat(id);
-  for (let i = 0; i < items.length; i++) {
-    const item = items[i];
+export const buildParents = (items, parent = null, level = 0) => {
+  let parents = [];
 
-    if (id === item.id) {
-      items.splice(i, 1);
-      return items;
+  items.filter(item => item.parent === parent).forEach(item => {
+    parents.push({
+      id: item.id,
+      title: '-'.repeat(level) + (level > 0 ? ' ' : '') + item.title,
+    });
+
+    if (level < 2) {
+      parents.push(...buildParents(items, item.id, level + 1));
     }
+  });
 
-    if (Array.isArray(item.sublist)) {
-      removeItemById(item.sublist, id);
-    }
-  }
-
-  return items;
+  return parents;
 };
